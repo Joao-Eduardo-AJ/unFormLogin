@@ -1,9 +1,9 @@
-import { Card } from '../../components/Card';
+import { Card, Typography } from '@mui/material';
 
 export function Register() {
   return (
     <Card>
-      <h1>register</h1>
+      <Typography>register</Typography>
     </Card>
   );
 }
