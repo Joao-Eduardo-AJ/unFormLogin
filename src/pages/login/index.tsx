@@ -4,16 +4,41 @@ import { Button, Grid } from '@mui/material';
 import { VTextField } from '../../components/VTextField';
 import { FormHandles } from '@unform/core';
 import { useRef } from 'react';
+import * as yup from 'yup';
+import { IVFormErrors } from '../../forms/IVFormErros';
 
-interface ISubmitData {
-  email: string;
-  password: string;
-}
+const formValidationSchema = yup.object({
+  email: yup.string().email().required(),
+  password: yup.string().required(),
+});
+
+interface ISubmitData extends yup.InferType<typeof formValidationSchema> {}
 
 export function Login() {
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmitForm = (data: ISubmitData) => console.log(data);
+  const handleSubmitForm = (data: ISubmitData) => {
+    formValidationSchema
+      .validate(data, { abortEarly: false })
+      .then(validatedData => {
+        if (validatedData instanceof Error) {
+          alert(Error);
+        } else {
+          alert(validatedData);
+        }
+      })
+      .catch((errors: yup.ValidationError) => {
+        const validationErrors: IVFormErrors = {};
+
+        errors.inner.forEach(error => {
+          if (!error.path) return;
+
+          validationErrors[error.path] = error.message;
+        });
+
+        formRef.current?.setErrors(validationErrors);
+      });
+  };
 
   return (
     <FormLayout>
