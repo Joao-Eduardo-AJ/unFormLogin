@@ -17,6 +17,9 @@ export const useStyles = makeStyles()(() => ({
       '& fieldset': {
         border: 'none',
       },
+      '&.Mui-focused fieldset': {
+        border: '1.5px solid #F2796B',
+      },
     },
   },
   link: {
