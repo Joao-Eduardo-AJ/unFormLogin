@@ -21,6 +21,12 @@ export const useStyles = makeStyles()(() => ({
         border: '1.5px solid #F2796B',
       },
     },
+    '& .MuiFormHelperText-root': {
+      background: 'linear-gradient(to top, #F8F3FB, #FEFAF7)',
+      margin: 0,
+      padding: '0 1rem',
+      borderRadius: '0px 0px 8px 8px',
+    },
   },
   link: {
     color: 'rgba(0, 0, 0, 0.6)',
