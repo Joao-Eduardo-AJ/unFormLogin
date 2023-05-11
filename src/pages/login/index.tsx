@@ -6,6 +6,9 @@ import { FormHandles } from '@unform/core';
 import { useRef } from 'react';
 import * as yup from 'yup';
 import { IVFormErrors } from '../../forms/IVFormErros';
+/* import { useNavigate } from 'react-router-dom'; */
+import { useAppDataContext } from '../../context/AppDataContext';
+import { AlertSnackbar } from '../../components/AlertSnackbar';
 
 const formValidationSchema = yup.object({
   email: yup.string().email().required(),
@@ -16,6 +19,9 @@ interface ISubmitData extends yup.InferType<typeof formValidationSchema> {}
 
 export function Login() {
   const formRef = useRef<FormHandles>(null);
+  /*   const navigate = useNavigate(); */
+  const { alertSnackbarvisible, handleAlertSnackbarVisible } =
+    useAppDataContext();
 
   const handleSubmitForm = (data: ISubmitData) => {
     formValidationSchema
@@ -24,7 +30,7 @@ export function Login() {
         if (validatedData instanceof Error) {
           alert(Error);
         } else {
-          alert(validatedData);
+          handleAlertSnackbarVisible();
         }
       })
       .catch((errors: yup.ValidationError) => {
@@ -41,16 +47,24 @@ export function Login() {
   };
 
   return (
-    <FormLayout>
-      <Form ref={formRef} onSubmit={handleSubmitForm}>
-        <Grid container gap={2}>
-          <VTextField label="email" name="email" />
-          <VTextField label="password" name="password" />
-          <Button variant="contained" type="submit" fullWidth>
-            Login
-          </Button>
-        </Grid>
-      </Form>
-    </FormLayout>
+    <>
+      <FormLayout>
+        <Form ref={formRef} onSubmit={handleSubmitForm}>
+          <Grid container gap={2}>
+            <VTextField label="email" name="email" />
+            <VTextField label="password" name="password" />
+            <Button variant="contained" fullWidth type="submit">
+              Login
+            </Button>
+          </Grid>
+        </Form>
+      </FormLayout>
+      <AlertSnackbar
+        open={alertSnackbarvisible}
+        handleClose={() => handleAlertSnackbarVisible()}
+        message="Login details don't match :("
+        severity="error"
+      />
+    </>
   );
 }
