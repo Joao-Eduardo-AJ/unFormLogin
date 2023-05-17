@@ -1,9 +1,12 @@
 import { ReactNode, createContext, useContext, useReducer } from 'react';
-import { initialArg, reducer } from '../reducer';
-
+import { initialState, reducer } from '../reducer';
+import { IUserData } from '../types';
 interface IAppContextData {
   handleAlertSnackbarVisible: () => void;
   alertSnackbarvisible: boolean;
+  registeredUsers: IUserData[];
+  userRegister: (userData: IUserData) => void;
+  userLogin: (userData: IUserData) => boolean;
 }
 
 const AppDataContext = createContext({} as IAppContextData);
@@ -17,7 +20,7 @@ export const useAppDataContext = () => {
 };
 
 export const AppDataProvider = ({ children }: IAppContext) => {
-  const [state, dispatch] = useReducer(reducer, initialArg);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   function handleAlertSnackbarVisible() {
     dispatch({
@@ -26,11 +29,36 @@ export const AppDataProvider = ({ children }: IAppContext) => {
     });
   }
 
+  const userLogin = (userData: IUserData) => {
+    const check = state.registeredUsers.findIndex(
+      user =>
+        user.email === userData.email && user.password === userData.password
+    );
+    return check > -1;
+  };
+
+  /*   const userLogout = () => {}; */
+
+  const userRegister = (userData: IUserData) => {
+    const check = state.registeredUsers.findIndex(
+      user => user.email === userData.email
+    );
+    check === -1
+      ? dispatch({
+          type: 'setRegisteredUser',
+          payload: [...state.registeredUsers, userData],
+        })
+      : console.log('usuário já cadastrado');
+  };
+
   return (
     <AppDataContext.Provider
       value={{
         handleAlertSnackbarVisible,
         alertSnackbarvisible: state.alertSnackBarVisible,
+        registeredUsers: state.registeredUsers,
+        userRegister,
+        userLogin,
       }}
     >
       {children}

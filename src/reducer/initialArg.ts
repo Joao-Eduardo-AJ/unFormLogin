@@ -1,5 +1,6 @@
 import { State } from '.';
 
-export const initialArg: State = {
+export const initialState: State = {
   alertSnackBarVisible: false,
+  registeredUsers: [],
 };
