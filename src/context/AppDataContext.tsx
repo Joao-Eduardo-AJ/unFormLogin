@@ -43,12 +43,15 @@ export const AppDataProvider = ({ children }: IAppContext) => {
     const check = state.registeredUsers.findIndex(
       user => user.email === userData.email
     );
-    check === -1
-      ? dispatch({
-          type: 'setRegisteredUser',
-          payload: [...state.registeredUsers, userData],
-        })
-      : console.log('usuário já cadastrado');
+    if (check === -1) {
+      userData.id = state.registeredUsers.length + 1;
+      dispatch({
+        type: 'setRegisteredUser',
+        payload: [...state.registeredUsers, userData],
+      });
+    } else {
+      console.log('usuário já cadastrado');
+    }
   };
 
   return (
