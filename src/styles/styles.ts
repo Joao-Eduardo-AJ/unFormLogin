@@ -1,8 +1,10 @@
 import { makeStyles } from 'tss-react/mui';
 
 export const useStyles = makeStyles()(() => ({
+  tableCell: {
+    borderBottom: '1px solid #D2775D',
+  },
   paper: {
-    backgroundColor: '#F8F3FB',
     height: '100vh',
     padding: '1rem',
     display: 'flex',
