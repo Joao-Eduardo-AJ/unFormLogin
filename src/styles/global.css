@@ -11,6 +11,7 @@ main {
     width: 100vw;
     height: 100vh;
     display: flex;
+    background-color: #F8F3FB;
     justify-content: center;
     align-items: center;
 }
