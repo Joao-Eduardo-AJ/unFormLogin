@@ -1,8 +1,9 @@
-import { Card, CardContent, Grid, Typography } from '@mui/material';
+import { CardContent, Grid, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useStyles } from '../../styles/styles';
 import { Person2Outlined } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import '../../forms/TranslationYup';
 
 interface FormLayoutProps {
   children: ReactNode;
@@ -13,7 +14,7 @@ export function FormLayout({ children }: FormLayoutProps) {
   const location = window.location.pathname;
 
   return (
-    <Card className={classes.paper}>
+    <Grid className={classes.paper}>
       <Grid container gap={4}>
         <Grid container item>
           <Grid item alignSelf={['start']}>
@@ -78,6 +79,6 @@ export function FormLayout({ children }: FormLayoutProps) {
           <strong>{location === '/' ? 'Sign up' : 'Login'}</strong>
         </Link>
       </Typography>
-    </Card>
+    </Grid>
   );
 }
