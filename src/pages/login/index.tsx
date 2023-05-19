@@ -6,20 +6,22 @@ import { FormHandles } from '@unform/core';
 import { useRef } from 'react';
 import * as yup from 'yup';
 import { IVFormErrors } from '../../forms/IVFormErros';
-/* import { useNavigate } from 'react-router-dom'; */
+import { useNavigate } from 'react-router-dom';
 import { useAppDataContext } from '../../context/AppDataContext';
 import { AlertSnackbar } from '../../components/AlertSnackbar';
+interface ISubmitData {
+  email: string;
+  password: string;
+}
 
-const formValidationSchema = yup.object({
-  email: yup.string().email().required(),
+const formValidationSchema: yup.ObjectSchema<ISubmitData> = yup.object().shape({
+  email: yup.string().required().email(),
   password: yup.string().required(),
 });
 
-interface ISubmitData extends yup.InferType<typeof formValidationSchema> {}
-
 export function Login() {
   const formRef = useRef<FormHandles>(null);
-  /*   const navigate = useNavigate(); */
+  const navigate = useNavigate();
   const { alertSnackbarvisible, handleAlertSnackbarVisible } =
     useAppDataContext();
 
@@ -30,10 +32,11 @@ export function Login() {
         if (validatedData instanceof Error) {
           alert(Error);
         } else {
-          handleAlertSnackbarVisible();
+          navigate('registeredusers');
         }
       })
       .catch((errors: yup.ValidationError) => {
+        handleAlertSnackbarVisible();
         const validationErrors: IVFormErrors = {};
 
         errors.inner.forEach(error => {
@@ -51,8 +54,8 @@ export function Login() {
       <FormLayout>
         <Form ref={formRef} onSubmit={handleSubmitForm}>
           <Grid container gap={2}>
-            <VTextField label="email" name="email" />
-            <VTextField label="password" name="password" />
+            <VTextField label="Email" name="email" />
+            <VTextField label="Password" name="password" />
             <Button variant="contained" fullWidth type="submit">
               Login
             </Button>
