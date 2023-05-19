@@ -36,8 +36,7 @@ export function Register() {
         if (validatedData instanceof Error) {
           alert(Error);
         } else {
-          userRegister(validatedData);
-          navigate('/registeredusers');
+          userRegister(validatedData) && navigate('/login');
         }
       })
       .catch((errors: yup.ValidationError) => {

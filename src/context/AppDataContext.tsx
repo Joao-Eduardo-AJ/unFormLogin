@@ -5,7 +5,7 @@ interface IAppContextData {
   handleAlertSnackbarVisible: () => void;
   alertSnackbarvisible: boolean;
   registeredUsers: IUserData[];
-  userRegister: (userData: IUserData) => void;
+  userRegister: (userData: IUserData) => boolean;
   userLogin: (userData: IUserData) => boolean;
 }
 
@@ -49,8 +49,10 @@ export const AppDataProvider = ({ children }: IAppContext) => {
         type: 'setRegisteredUser',
         payload: [...state.registeredUsers, userData],
       });
+      return false;
     } else {
       console.log('usuário já cadastrado');
+      return true;
     }
   };
 

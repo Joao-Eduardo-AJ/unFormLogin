@@ -22,7 +22,7 @@ const formValidationSchema: yup.ObjectSchema<ISubmitData> = yup.object().shape({
 export function Login() {
   const formRef = useRef<FormHandles>(null);
   const navigate = useNavigate();
-  const { alertSnackbarvisible, handleAlertSnackbarVisible } =
+  const { alertSnackbarvisible, handleAlertSnackbarVisible, registeredUsers } =
     useAppDataContext();
 
   const handleSubmitForm = (data: ISubmitData) => {
@@ -32,11 +32,15 @@ export function Login() {
         if (validatedData instanceof Error) {
           alert(Error);
         } else {
-          navigate('registeredusers');
+          const userData = registeredUsers.find(
+            data =>
+              data.email === validatedData.email &&
+              data.password === validatedData.password
+          );
+          userData ? navigate('registeredusers') : handleAlertSnackbarVisible();
         }
       })
       .catch((errors: yup.ValidationError) => {
-        handleAlertSnackbarVisible();
         const validationErrors: IVFormErrors = {};
 
         errors.inner.forEach(error => {
