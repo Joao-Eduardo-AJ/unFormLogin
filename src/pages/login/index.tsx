@@ -2,14 +2,14 @@ import { Form } from '@unform/web';
 import { FormLayout } from '../../shared/components/FormLayout';
 import { Button, Grid, IconButton, InputAdornment } from '@mui/material';
 import { VTextField } from '../../shared/forms/VTextField';
-import { FormHandles } from '@unform/core';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { IVFormErrors } from '../../shared/forms/IVFormErros';
 import { useNavigate } from 'react-router-dom';
 import { useAppDataContext } from '../../shared/contexts/AppDataContext';
 import { AlertSnackbar } from '../../shared/components/AlertSnackbar';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useVForm } from '../../shared/forms/useVForm';
 interface ISubmitData {
   email: string;
   password: string;
@@ -21,10 +21,10 @@ const formValidationSchema: yup.ObjectSchema<ISubmitData> = yup.object().shape({
 });
 
 export function Login() {
-  const formRef = useRef<FormHandles>(null);
   const navigate = useNavigate();
   const { alertSnackbarvisible, handleAlertSnackbarVisible, registeredUsers } =
     useAppDataContext();
+  const { formRef, login } = useVForm();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -59,7 +59,7 @@ export function Login() {
   useEffect(() => {
     registeredUsers.length > 5 &&
       formRef.current?.setData(registeredUsers[registeredUsers.length - 1]);
-  }, [registeredUsers]);
+  }, [formRef, registeredUsers]);
 
   return (
     <>
@@ -88,7 +88,7 @@ export function Login() {
                 ),
               }}
             />
-            <Button variant="contained" fullWidth type="submit">
+            <Button variant="contained" fullWidth onClick={login}>
               Login
             </Button>
           </Grid>

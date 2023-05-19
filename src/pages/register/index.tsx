@@ -2,13 +2,13 @@ import { Form } from '@unform/web';
 import { FormLayout } from '../../shared/components/FormLayout';
 import { Button, Grid, IconButton, InputAdornment } from '@mui/material';
 import { VTextField } from '../../shared/forms/VTextField';
-import { FormHandles } from '@unform/core';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import * as yup from 'yup';
 import { IVFormErrors } from '../../shared/forms/IVFormErros';
 import { useAppDataContext } from '../../shared/contexts/AppDataContext';
 import { useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useVForm } from '../../shared/forms/useVForm';
 
 interface ISubmitData {
   email: string;
@@ -33,7 +33,7 @@ const formValidationSchema: yup.ObjectSchema<ISubmitData> = yup.object({
 
 export function Register() {
   const { userRegister } = useAppDataContext();
-  const formRef = useRef<FormHandles>(null);
+  const { formRef, register } = useVForm();
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -94,7 +94,7 @@ export function Register() {
             name="passwordConfirmation"
             type="password"
           />
-          <Button variant="contained" type="submit" fullWidth>
+          <Button variant="contained" onClick={register} fullWidth>
             Register
           </Button>
         </Grid>
