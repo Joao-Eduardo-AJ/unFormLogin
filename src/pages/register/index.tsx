@@ -1,7 +1,7 @@
 import { Form } from '@unform/web';
 import { FormLayout } from '../../shared/components/FormLayout';
 import { Button, Grid, IconButton, InputAdornment } from '@mui/material';
-import { VTextField } from '../../shared/components/VTextField';
+import { VTextField } from '../../shared/forms/VTextField';
 import { FormHandles } from '@unform/core';
 import { useRef, useState } from 'react';
 import * as yup from 'yup';
