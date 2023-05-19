@@ -37,8 +37,6 @@ export const AppDataProvider = ({ children }: IAppContext) => {
     return check > -1;
   };
 
-  /*   const userLogout = () => {}; */
-
   const userRegister = (userData: IUserData) => {
     const check = state.registeredUsers.findIndex(
       user => user.email === userData.email

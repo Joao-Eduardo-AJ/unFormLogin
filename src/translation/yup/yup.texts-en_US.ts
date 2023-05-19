@@ -7,6 +7,9 @@ export const Texts = {
   STRING_MIN: 'This field must to contain bigger than',
   STRING_LENGTH: 'The field must have exactly',
 
+  MATCHES:
+    'The password must contain at least one uppercase letter, one lowercase letter, one special character, and one number',
+
   ONE_OF: 'The passwords must be same',
 
   CHARACTERS: 'characters',

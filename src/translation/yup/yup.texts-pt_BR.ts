@@ -7,6 +7,9 @@ export const Texts = {
   STRING_MIN: 'O campo deve conter mais que',
   STRING_LENGTH: 'O campo deve conter exatamente',
 
+  MATCHES:
+    'A senha deve conter ao menos uma letra maiúscula, uma minúscula, um caracter especial e um número',
+
   ONE_OF: 'As senhas devem ser iguais',
 
   CHARACTERS: 'caracteres',

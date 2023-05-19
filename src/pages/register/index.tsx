@@ -17,7 +17,13 @@ interface ISubmitData {
 
 const formValidationSchema: yup.ObjectSchema<ISubmitData> = yup.object({
   email: yup.string().required().email(),
-  password: yup.string().required(),
+  password: yup
+    .string()
+    .required()
+    .min(8)
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@$!%*?&]*$/
+    ),
   passwordConfirmation: yup
     .string()
     .required()
@@ -36,7 +42,9 @@ export function Register() {
         if (validatedData instanceof Error) {
           alert(Error);
         } else {
-          userRegister(validatedData) && navigate('/login');
+          userRegister(validatedData)
+            ? navigate('/login')
+            : navigate('/registeredusers');
         }
       })
       .catch((errors: yup.ValidationError) => {
