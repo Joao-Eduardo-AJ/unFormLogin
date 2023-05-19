@@ -3,7 +3,7 @@ import { FormLayout } from '../../components/FormLayout';
 import { Button, Grid } from '@mui/material';
 import { VTextField } from '../../components/VTextField';
 import { FormHandles } from '@unform/core';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import * as yup from 'yup';
 import { IVFormErrors } from '../../forms/IVFormErros';
 import { useNavigate } from 'react-router-dom';
@@ -52,6 +52,11 @@ export function Login() {
         formRef.current?.setErrors(validationErrors);
       });
   };
+
+  useEffect(() => {
+    registeredUsers.length > 5 &&
+      formRef.current?.setData(registeredUsers[registeredUsers.length - 1]);
+  }, [registeredUsers]);
 
   return (
     <>
