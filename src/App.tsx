@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@emotion/react';
 import { getOrCreateTheme } from './styles/theme';
 import { BrowserRouter } from 'react-router-dom';
-import { AppDataProvider } from './context/AppDataContext';
+import { AppDataProvider } from './shared/contexts/AppDataContext';
 import { AppRoutes } from './routes';
 import './styles/global.css';
 

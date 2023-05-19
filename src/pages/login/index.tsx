@@ -1,14 +1,14 @@
 import { Form } from '@unform/web';
-import { FormLayout } from '../../components/FormLayout';
+import { FormLayout } from '../../shared/components/FormLayout';
 import { Button, Grid, IconButton, InputAdornment } from '@mui/material';
-import { VTextField } from '../../components/VTextField';
+import { VTextField } from '../../shared/components/VTextField';
 import { FormHandles } from '@unform/core';
 import { useEffect, useRef, useState } from 'react';
 import * as yup from 'yup';
-import { IVFormErrors } from '../../forms/IVFormErros';
+import { IVFormErrors } from '../../shared/forms/IVFormErros';
 import { useNavigate } from 'react-router-dom';
-import { useAppDataContext } from '../../context/AppDataContext';
-import { AlertSnackbar } from '../../components/AlertSnackbar';
+import { useAppDataContext } from '../../shared/contexts/AppDataContext';
+import { AlertSnackbar } from '../../shared/components/AlertSnackbar';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 interface ISubmitData {
   email: string;

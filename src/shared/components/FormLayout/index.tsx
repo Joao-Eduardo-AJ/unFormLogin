@@ -1,9 +1,9 @@
 import { CardContent, Grid, Typography } from '@mui/material';
 import { ReactNode } from 'react';
-import { useStyles } from '../../styles/styles';
+import { useStyles } from '../../../styles/styles';
 import { Person2Outlined } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import '../../forms/TranslationYup';
+import '../../../shared/forms/TranslationYup';
 import { FloatingBalls } from '../FloatingBall';
 interface FormLayoutProps {
   children: ReactNode;

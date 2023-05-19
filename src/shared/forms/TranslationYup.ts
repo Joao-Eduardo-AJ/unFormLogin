@@ -1,5 +1,5 @@
 import { setLocale } from 'yup';
-import { TextsProvider } from '../translation/yup';
+import { TextsProvider } from '../../translation/yup';
 
 const texts = TextsProvider.get();
 

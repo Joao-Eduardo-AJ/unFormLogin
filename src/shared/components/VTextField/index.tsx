@@ -1,7 +1,7 @@
 import { TextField, TextFieldProps } from '@mui/material';
 import { useField } from '@unform/core';
 import { useEffect, useRef } from 'react';
-import { useStyles } from '../../styles/styles';
+import { useStyles } from '../../../styles/styles';
 
 type TVTextFieldProps = TextFieldProps & {
   name: string;

@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import { useAppDataContext } from '../../context/AppDataContext';
+import { useAppDataContext } from '../../shared/contexts/AppDataContext';
 import { ChangeEvent, useMemo, useState } from 'react';
 import { useStyles } from '../../styles/styles';
 import { Button, Grid } from '@mui/material';
