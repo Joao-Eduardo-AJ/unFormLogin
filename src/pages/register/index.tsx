@@ -6,28 +6,28 @@ import { FormHandles } from '@unform/core';
 import { useRef } from 'react';
 import * as yup from 'yup';
 import { IVFormErrors } from '../../forms/IVFormErros';
+import { useAppDataContext } from '../../context/AppDataContext';
+import { useNavigate } from 'react-router-dom';
 
 interface ISubmitData {
   email: string;
   password: string;
   passwordConfirmation: string;
-  [key: string]: any;
 }
 
-const formValidationSchema = yup
-  .object({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-    passwordConfirmation: yup
-      .string()
-      .oneOf([yup.ref('password')], 'Passwords must be the same')
-      .required(),
-  })
-  .noUnknown()
-  .defined();
+const formValidationSchema: yup.ObjectSchema<ISubmitData> = yup.object({
+  email: yup.string().required().email(),
+  password: yup.string().required(),
+  passwordConfirmation: yup
+    .string()
+    .required()
+    .oneOf([yup.ref('password')]),
+});
 
 export function Register() {
+  const { userRegister } = useAppDataContext();
   const formRef = useRef<FormHandles>(null);
+  const navigate = useNavigate();
 
   const handleSubmitForm = (data: ISubmitData) => {
     formValidationSchema
@@ -36,7 +36,8 @@ export function Register() {
         if (validatedData instanceof Error) {
           alert(Error);
         } else {
-          alert(validatedData);
+          userRegister(validatedData);
+          navigate('/registeredusers');
         }
       })
       .catch((errors: yup.ValidationError) => {
