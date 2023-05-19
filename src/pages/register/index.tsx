@@ -1,13 +1,14 @@
 import { Form } from '@unform/web';
 import { FormLayout } from '../../components/FormLayout';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, IconButton, InputAdornment } from '@mui/material';
 import { VTextField } from '../../components/VTextField';
 import { FormHandles } from '@unform/core';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import * as yup from 'yup';
 import { IVFormErrors } from '../../forms/IVFormErros';
 import { useAppDataContext } from '../../context/AppDataContext';
 import { useNavigate } from 'react-router-dom';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 interface ISubmitData {
   email: string;
@@ -34,6 +35,8 @@ export function Register() {
   const { userRegister } = useAppDataContext();
   const formRef = useRef<FormHandles>(null);
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmitForm = (data: ISubmitData) => {
     formValidationSchema
@@ -65,8 +68,32 @@ export function Register() {
       <Form ref={formRef} onSubmit={handleSubmitForm}>
         <Grid container gap={2}>
           <VTextField label="Email" name="email" />
-          <VTextField label="Password" name="password" />
-          <VTextField label="Repeat the password" name="passwordConfirmation" />
+          <VTextField
+            label="Password"
+            name="password"
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => {
+                      showPassword
+                        ? setShowPassword(false)
+                        : setShowPassword(true);
+                    }}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <VTextField
+            label="Repeat the password"
+            name="passwordConfirmation"
+            type="password"
+          />
           <Button variant="contained" type="submit" fullWidth>
             Register
           </Button>

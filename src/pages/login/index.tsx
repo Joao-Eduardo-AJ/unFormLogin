@@ -1,14 +1,15 @@
 import { Form } from '@unform/web';
 import { FormLayout } from '../../components/FormLayout';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, IconButton, InputAdornment } from '@mui/material';
 import { VTextField } from '../../components/VTextField';
 import { FormHandles } from '@unform/core';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as yup from 'yup';
 import { IVFormErrors } from '../../forms/IVFormErros';
 import { useNavigate } from 'react-router-dom';
 import { useAppDataContext } from '../../context/AppDataContext';
 import { AlertSnackbar } from '../../components/AlertSnackbar';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 interface ISubmitData {
   email: string;
   password: string;
@@ -24,6 +25,8 @@ export function Login() {
   const navigate = useNavigate();
   const { alertSnackbarvisible, handleAlertSnackbarVisible, registeredUsers } =
     useAppDataContext();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmitForm = (data: ISubmitData) => {
     formValidationSchema
@@ -64,7 +67,27 @@ export function Login() {
         <Form ref={formRef} onSubmit={handleSubmitForm}>
           <Grid container gap={2}>
             <VTextField label="Email" name="email" />
-            <VTextField label="Password" name="password" />
+            <VTextField
+              label="Password"
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => {
+                        showPassword
+                          ? setShowPassword(false)
+                          : setShowPassword(true);
+                      }}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
             <Button variant="contained" fullWidth type="submit">
               Login
             </Button>
