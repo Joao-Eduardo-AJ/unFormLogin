@@ -4,7 +4,7 @@ import { useStyles } from '../../styles/styles';
 import { Person2Outlined } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import '../../forms/TranslationYup';
-
+import { FloatingBalls } from '../FloatingBall';
 interface FormLayoutProps {
   children: ReactNode;
 }
@@ -12,10 +12,15 @@ interface FormLayoutProps {
 export function FormLayout({ children }: FormLayoutProps) {
   const { classes } = useStyles();
   const location = window.location.pathname;
+  const floatingBallTypes = ['One', 'Two', 'Three'];
 
   return (
-    <Grid className={classes.paper}>
-      <Grid container gap={4}>
+    <Grid className={classes.paper} position="relative" overflow="hidden">
+      {floatingBallTypes.map(ballType => (
+        <FloatingBalls type={ballType} key={ballType} />
+      ))}
+
+      <Grid container gap={4} zIndex={1}>
         <Grid container item>
           <Grid item alignSelf={['start']}>
             <Typography
@@ -71,7 +76,7 @@ export function FormLayout({ children }: FormLayoutProps) {
           </Typography>
         </Grid>
       </Grid>
-      <Typography color="#00000099" fontSize={12}>
+      <Typography color="#00000099" fontSize={12} zIndex={1}>
         {location === '/'
           ? "You don't have an account? "
           : 'You already have an account? '}
