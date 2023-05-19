@@ -17,7 +17,7 @@ export const AlertSnackbar = ({
       onClose={handleClose}
       TransitionComponent={SlideTransition}
       onAnimationEnd={() => !open}
-      autoHideDuration={3000}
+      autoHideDuration={1200}
     >
       <Alert {...props} onClose={handleClose}>
         {message}
