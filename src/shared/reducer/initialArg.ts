@@ -2,6 +2,7 @@ import { State } from '.';
 
 export const initialState: State = {
   alertSnackBarVisible: false,
+  ballSize: 20,
   registeredUsers: [
     {
       id: 1,

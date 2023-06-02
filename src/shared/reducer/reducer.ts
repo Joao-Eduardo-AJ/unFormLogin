@@ -5,6 +5,9 @@ export function reducer(state: State, action: Actions) {
     case 'setAlertSnackbarVisible':
       return { ...state, alertSnackBarVisible: action.payload };
 
+    case 'setBallSize':
+      return { ...state, ballSize: action.payload };
+
     case 'setRegisteredUser':
       return { ...state, registeredUsers: action.payload };
 

@@ -1,9 +1,16 @@
-import { ReactNode, createContext, useContext, useReducer } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+} from 'react';
 import { initialState, reducer } from '../reducer';
 import { IUserData } from '../types';
 interface IAppContextData {
   handleAlertSnackbarVisible: () => void;
   alertSnackbarvisible: boolean;
+  ballSize: number;
   registeredUsers: IUserData[];
   userRegister: (userData: IUserData) => boolean;
   userLogin: (userData: IUserData) => boolean;
@@ -28,6 +35,10 @@ export const AppDataProvider = ({ children }: IAppContext) => {
       payload: !state.alertSnackBarVisible,
     });
   }
+
+  const handleBallSize = (data: number) => {
+    dispatch({ type: 'setBallSize', payload: data });
+  };
 
   const userLogin = (userData: IUserData) => {
     const check = state.registeredUsers.findIndex(
@@ -54,12 +65,29 @@ export const AppDataProvider = ({ children }: IAppContext) => {
     }
   };
 
+  useEffect(() => {
+    let pageWidth = 0;
+    function handleResize() {
+      pageWidth = window.innerWidth;
+      pageWidth < 500
+        ? handleBallSize(15)
+        : pageWidth >= 500 && pageWidth < 1000
+        ? handleBallSize(25)
+        : handleBallSize(35);
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <AppDataContext.Provider
       value={{
         handleAlertSnackbarVisible,
         alertSnackbarvisible: state.alertSnackBarVisible,
         registeredUsers: state.registeredUsers,
+        ballSize: state.ballSize,
         userRegister,
         userLogin,
       }}
