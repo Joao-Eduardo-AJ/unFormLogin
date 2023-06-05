@@ -9,6 +9,7 @@ import { useAppDataContext } from '../../shared/contexts/AppDataContext';
 import { useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useVForm } from '../../shared/forms/useVForm';
+import { TextsProvider } from '../../translation/appTranslation';
 
 interface ISubmitData {
   email: string;
@@ -35,6 +36,7 @@ export function Register() {
   const { userRegister } = useAppDataContext();
   const { formRef, register } = useVForm();
   const navigate = useNavigate();
+  const texts = TextsProvider.get();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -69,7 +71,7 @@ export function Register() {
         <Grid container gap={2}>
           <VTextField label="Email" name="email" />
           <VTextField
-            label="Password"
+            label={texts.PASSWORD_LABEL}
             name="password"
             type={showPassword ? 'text' : 'password'}
             InputProps={{
@@ -90,12 +92,12 @@ export function Register() {
             }}
           />
           <VTextField
-            label="Repeat the password"
+            label={texts.REPEAT_LABEL}
             name="passwordConfirmation"
             type="password"
           />
           <Button variant="contained" onClick={register} fullWidth>
-            Register
+            {texts.REGISTER_BUTTON}
           </Button>
         </Grid>
       </Form>

@@ -13,6 +13,7 @@ import { ChangeEvent, useMemo, useState } from 'react';
 import { useStyles } from '../../styles/styles';
 import { Button, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { TextsProvider } from '../../translation/appTranslation';
 
 function EnhancedTableHead() {
   const headerTableCell = [
@@ -40,6 +41,7 @@ function EnhancedTableHead() {
 }
 
 function EnhancedTableToolbar() {
+  const texts = TextsProvider.get();
   return (
     <Toolbar
       sx={{ backgroundColor: '#F2796B', borderRadius: '.5rem .5rem 0 0' }}
@@ -50,7 +52,7 @@ function EnhancedTableToolbar() {
         id="tableTitle"
         component="div"
       >
-        Registered users
+        {texts.REGISTERED_USERS}
       </Typography>
     </Toolbar>
   );
@@ -60,6 +62,7 @@ export default function RegisteredUsersTable() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const navigate = useNavigate();
+  const texts = TextsProvider.get();
 
   const { classes } = useStyles();
 
@@ -107,15 +110,16 @@ export default function RegisteredUsersTable() {
           component="div"
           count={registeredUsers.length}
           rowsPerPage={rowsPerPage}
+          labelRowsPerPage={texts.ROWS_PER_PAGE}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
       <Grid container item justifyContent="end" padding={2} gap={1}>
-        <Button variant="outlined">Sair</Button>
+        <Button variant="outlined">{texts.EXIT_BUTTON}</Button>
         <Button variant="contained" onClick={() => navigate('/login')}>
-          Voltar
+          {texts.BACK_BUTTON}
         </Button>
       </Grid>
     </Grid>

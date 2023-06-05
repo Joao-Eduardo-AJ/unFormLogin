@@ -10,6 +10,7 @@ import { useAppDataContext } from '../../shared/contexts/AppDataContext';
 import { AlertSnackbar } from '../../shared/components/AlertSnackbar';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useVForm } from '../../shared/forms/useVForm';
+import { TextsProvider } from '../../translation/appTranslation';
 interface ISubmitData {
   email: string;
   password: string;
@@ -25,6 +26,7 @@ export function Login() {
   const { alertSnackbarvisible, handleAlertSnackbarVisible, registeredUsers } =
     useAppDataContext();
   const { formRef, login } = useVForm();
+  const texts = TextsProvider.get();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -68,7 +70,7 @@ export function Login() {
           <Grid container gap={2}>
             <VTextField label="Email" name="email" />
             <VTextField
-              label="Password"
+              label={texts.PASSWORD_LABEL}
               name="password"
               type={showPassword ? 'text' : 'password'}
               InputProps={{
@@ -89,7 +91,7 @@ export function Login() {
               }}
             />
             <Button variant="contained" fullWidth onClick={login}>
-              Login
+              {texts.LOGIN}
             </Button>
           </Grid>
         </Form>
@@ -97,7 +99,7 @@ export function Login() {
       <AlertSnackbar
         open={alertSnackbarvisible}
         handleClose={() => handleAlertSnackbarVisible()}
-        message="Login details don't match :("
+        message={texts.LOGIN_DETAILS_DONT_MATCH}
         severity="error"
       />
     </>
