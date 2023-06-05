@@ -14,6 +14,7 @@ interface IAppContextData {
   registeredUsers: IUserData[];
   userRegister: (userData: IUserData) => boolean;
   userLogin: (userData: IUserData) => boolean;
+  handleLogout: () => Promise<void>;
 }
 
 const AppDataContext = createContext({} as IAppContextData);
@@ -65,6 +66,12 @@ export const AppDataProvider = ({ children }: IAppContext) => {
     }
   };
 
+  const handleLogout = async () => {
+    const registeredUsers = state.registeredUsers;
+    registeredUsers.splice(registeredUsers.length - 1, 1);
+    dispatch({ type: 'setRegisteredUser', payload: registeredUsers });
+  };
+
   useEffect(() => {
     let pageWidth = 0;
     function handleResize() {
@@ -88,6 +95,7 @@ export const AppDataProvider = ({ children }: IAppContext) => {
         alertSnackbarvisible: state.alertSnackBarVisible,
         registeredUsers: state.registeredUsers,
         ballSize: state.ballSize,
+        handleLogout,
         userRegister,
         userLogin,
       }}

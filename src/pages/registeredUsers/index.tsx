@@ -66,7 +66,7 @@ export default function RegisteredUsersTable() {
 
   const { classes } = useStyles();
 
-  const { registeredUsers } = useAppDataContext();
+  const { registeredUsers, handleLogout } = useAppDataContext();
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -117,7 +117,15 @@ export default function RegisteredUsersTable() {
         />
       </Paper>
       <Grid container item justifyContent="end" padding={2} gap={1}>
-        <Button variant="outlined">{texts.EXIT_BUTTON}</Button>
+        <Button
+          variant="outlined"
+          onClick={async () => {
+            await handleLogout();
+            navigate('/register');
+          }}
+        >
+          {texts.EXIT_BUTTON}
+        </Button>
         <Button variant="contained" onClick={() => navigate('/login')}>
           {texts.BACK_BUTTON}
         </Button>
